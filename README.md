@@ -22,4 +22,3 @@ TODOs
 - Gem-ify
 - Set date of pickup via CLI option
 - Enter/update details by CLI
-

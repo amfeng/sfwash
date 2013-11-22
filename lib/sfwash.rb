@@ -3,22 +3,44 @@ require 'net/http/post/multipart'
 module SFWash
   class Client
     SFWASH_URL = 'http://requestb.in/10s5g3l1'
+    TRANSFORMED_PARAMS = {
+      :name => 'ff_nm_Name[]',
+      :phone => 'ff_nm_Phone[]',
+      :email => 'ff_nm_email[]',
+      :address => 'ff_nm_bfQuickMode2392926[]',
+      :apartment => 'ff_nm_bfQuickMode2924333[]',
+      :day => 'ff_nm_day[]',
+      :time => 'ff_nm_Time[]',
+      :instructions => 'ff_nm_Instructions[]',
+      :detergent => 'ff_nm_detergent[]',
+      :bleach => 'ff_nm_Bleach[]',
+      :softener => 'ff_nm_Softener[]'
+    }
+
+    def transform_params(params)
+      transformed_params = {}
+      for key, value in params
+        transformed_params[TRANSFORMED_PARAMS[key]] = value
+      end
+
+      transformed_params
+    end
 
     def schedule_request
       url = URI.parse(SFWASH_URL)
-      params = {
-        'ff_nm_Name[]' => 'Amber Feng',
-        'ff_nm_Phone[]' => 'phone',
-        'ff_nm_email[]' => 'email',
-        'ff_nm_bfQuickMode2392926[]' => 'address',
-        'ff_nm_bfQuickMode2924333[]' => 'suite',
-        'ff_nm_day[]' => 'Friday',
-        'ff_nm_Time[]' => 'Anytime_Access',
-        'ff_nm_Instructions[]' => 'OldPreferences',
-        'ff_nm_detergent[]' => 'Last Order',
-        'ff_nm_Bleach[]' => 'Last Order',
-        'ff_nm_Softener[]' => 'Last Order'
-      }
+      params = transform_params({
+        :name => 'Amber Feng',
+        :phone => 'blah',
+        :email => 'blah',
+        :address => 'blah',
+        :apartment => 'blah',
+        :day => 'Friday',
+        :time => 'Anytime_Access',
+        :instructions => 'OldPreferences',
+        :detergent => 'Last Order',
+        :bleach => 'Last Order',
+        :softener => 'Last Order'
+      })
 
       req = Net::HTTP::Post::Multipart.new(url.path, params)
       res = Net::HTTP.start(url.host, url.port) do |http|
