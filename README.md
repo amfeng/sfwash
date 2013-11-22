@@ -14,13 +14,19 @@ well!
 Usage
 ----
 
+Install the gem:
+
 ```
 $ gem install sfwash
 ```
 
+Then, to schedule a pickup (make sure you have your config file created first):
+
 ```
 $ sfwash schedule
 ```
+
+Or provide a day of the week:
 
 ```
 $ sfwash schedule friday
