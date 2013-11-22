@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    chronic (0.10.2)
+    metaclass (0.0.1)
+    minitest (5.0.8)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
+    multipart-post (1.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  chronic
+  minitest
+  mocha
+  multipart-post
