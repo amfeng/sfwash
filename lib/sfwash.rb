@@ -1,4 +1,5 @@
 require 'net/http/post/multipart'
+require 'yaml'
 
 module SFWash
   class Client
@@ -26,23 +27,10 @@ module SFWash
       transformed_params
     end
 
-    def schedule_request
+    def schedule_request(params)
       url = URI.parse(SFWASH_URL)
-      params = transform_params({
-        :name => 'Amber Feng',
-        :phone => 'blah',
-        :email => 'blah',
-        :address => 'blah',
-        :apartment => 'blah',
-        :day => 'Friday',
-        :time => 'Anytime_Access',
-        :instructions => 'OldPreferences',
-        :detergent => 'Last Order',
-        :bleach => 'Last Order',
-        :softener => 'Last Order'
-      })
 
-      req = Net::HTTP::Post::Multipart.new(url.path, params)
+      req = Net::HTTP::Post::Multipart.new(url.path, transform_params(params))
       res = Net::HTTP.start(url.host, url.port) do |http|
         http.request(req)
       end
@@ -56,9 +44,13 @@ module SFWash
   end
 
   class CLI
+    CONFIG_PATH = '~/.sfwash'
+
     def schedule
       client = SFWash::Client.new
-      client.schedule_request
+
+      saved_config = YAML.load_file(File.expand_path(CONFIG_PATH))[:preferences]
+      client.schedule_request(saved_config)
     end
   end
 end
