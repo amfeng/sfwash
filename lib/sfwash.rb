@@ -44,13 +44,18 @@ module SFWash
   end
 
   class CLI
-    CONFIG_PATH = File.expand_path('~/.sfwash')
+    CONFIG_FILE_PATH = File.expand_path('~/.sfwash')
 
     def schedule
       client = SFWash::Client.new
 
-      saved_config = YAML.load_file(CONFIG_PATH)[:preferences]
-      client.schedule_request(saved_config)
+      if File.exists?(CONFIG_FILE_PATH)
+        config = YAML.load_file(CONFIG_FILE_PATH)[:preferences]
+        client.schedule_request(config)
+      else
+        puts "Oh no, you don't have a config! See the documentation at https://github.com/amfeng/sfwash."
+      end
+
     end
   end
 end
