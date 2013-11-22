@@ -44,21 +44,42 @@ module SFWash
   end
 
   class CLI
+    VALID_COMMANDS = %w{schedule}
     CONFIG_FILE_PATH = File.expand_path('~/.sfwash')
 
-    def schedule
+    AVAILABLE_DAYS = %w{Monday Tuesday Wednesday Thursday Friday}
+
+    def self.run(command, options)
+      if command && VALID_COMMANDS.include?(command)
+        self.send(command, options)
+      elsif command
+        $stderr.puts("Sorry, `#{command}` is not a valid command.")
+        exit
+      else
+        $stderr.puts("You must specify a command! Try `sfwash help`.")
+      end
+    end
+
+    def self.schedule(options)
       client = SFWash::Client.new
 
       if File.exists?(CONFIG_FILE_PATH)
         config = YAML.load_file(CONFIG_FILE_PATH)[:preferences]
+
+        if options[:day]
+          day = transform_day(options[:day])
+          config = config.merge(:day => day) if day
+        end
+
         client.schedule_request(config)
       else
         puts "Oh no, you don't have a config! See the documentation at https://github.com/amfeng/sfwash."
       end
+    end
 
+    def self.transform_day(day)
+      day = day.capitalize
+      day if AVAILABLE_DAYS.include?(day)
     end
   end
 end
-
-cli = SFWash::CLI.new
-cli.schedule

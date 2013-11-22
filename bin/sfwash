@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require './lib/sfwash'
+
+command = ARGV.shift
+options = {}
+
+# If one more command line argument, it's the day to schedule the pickup
+if ARGV.length == 1
+  options = {:day => ARGV.shift}
+end
+
+ARGV.options do |opts|
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+
+  opts.parse!
+end
+
+SFWash::CLI.run(command, options)
