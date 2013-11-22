@@ -14,11 +14,17 @@ well!
 Usage
 ----
 
-`$ gem install sfwash`
+```
+$ gem install sfwash
+```
 
-`$ sfwash schedule`
+```
+$ sfwash schedule
+```
 
-`$ sfwash schedule friday`
+```
+$ sfwash schedule friday
+```
 
 Config file
 ----
