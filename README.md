@@ -14,8 +14,11 @@ well!
 Usage
 ----
 
-`sfwash schedule`
-`sfwash schedule friday`
+`$ gem install sfwash`
+
+`$ sfwash schedule`
+
+`$ sfwash schedule friday`
 
 Config file
 ----
