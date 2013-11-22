@@ -44,12 +44,12 @@ module SFWash
   end
 
   class CLI
-    CONFIG_PATH = '~/.sfwash'
+    CONFIG_PATH = File.expand_path('~/.sfwash')
 
     def schedule
       client = SFWash::Client.new
 
-      saved_config = YAML.load_file(File.expand_path(CONFIG_PATH))[:preferences]
+      saved_config = YAML.load_file(CONFIG_PATH)[:preferences]
       client.schedule_request(saved_config)
     end
   end
