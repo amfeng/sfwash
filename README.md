@@ -15,6 +15,7 @@ Usage
 ----
 
 `sfwash schedule`
+`sfwash schedule friday`
 
 Config file
 ----
