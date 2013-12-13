@@ -3,7 +3,7 @@ require 'yaml'
 
 module SFWash
   class Client
-    SFWASH_URL = 'http://requestb.in/pqfv3tpq'
+    SFWASH_URL = 'http://www.sfwash.com/schedule-a-pick-up'
     TRANSFORMED_PARAMS = {
       :name => 'ff_nm_Name[]',
       :phone => 'ff_nm_Phone[]',
@@ -24,7 +24,19 @@ module SFWash
         transformed_params[TRANSFORMED_PARAMS[key]] = value
       end
 
-      transformed_params
+      # Other random parameters that pretty much must be included as well
+      transformed_params.merge({
+        'ff_contentid' => 2,
+        'ff_applic' => nil,
+        'ff_module_id' => nil,
+        'ff_form' => 4,
+        'ff_task' => 'submit',
+        'ff_target' => 2,
+        'ff_align' => nil,
+        'option' => 'com_content',
+        'Itemid' => 2,
+        'id' => 2
+      })
     end
 
     def schedule_request(params)
