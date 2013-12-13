@@ -52,10 +52,3 @@ Example config file:
   :bleach: Last Order
   :softener: Last Order
 ```
-
-TODOs
-----
-
-- Gem-ify
-- Set date of pickup via CLI option
-- Enter/update details by CLI
