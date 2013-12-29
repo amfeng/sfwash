@@ -52,3 +52,31 @@ Example config file:
   :bleach: Last Order
   :softener: Last Order
 ```
+
+Building
+----
+
+1. Clone the repository and install all dependencies.
+
+```
+git clone git@github.com:amfeng/sfwash.git
+```
+
+2. Stub out the real CLIENT_URL in `lib/sfwash.rb` (https://github.com/amfeng/sfwash/blob/master/lib/sfwash.rb#L6) with something from [RequestBin](http://requestb.in) or similar.
+
+3. Build and install the gem locally.
+
+```
+gem build sfwash.gemspec && gem install sfwash-0.1.0.gem
+```
+
+4. Run the gem! (Make sure to rebuild and install after any changes.)
+
+```
+sfwash schedule
+```
+
+Contributing
+----
+
+Feel free to open a pull request! (:
