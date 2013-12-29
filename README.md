@@ -62,7 +62,7 @@ Building
 git clone git@github.com:amfeng/sfwash.git
 ```
 
-2. Stub out the real CLIENT_URL in `lib/sfwash.rb` (https://github.com/amfeng/sfwash/blob/master/lib/sfwash.rb#L6) with something from [RequestBin](http://requestb.in) or similar.
+2. Stub out the real SFWASH_URL in `lib/sfwash.rb` (https://github.com/amfeng/sfwash/blob/master/lib/sfwash.rb#L6) with something from [RequestBin](http://requestb.in) or similar.
 
 3. Build and install the gem locally.
 
