@@ -56,7 +56,7 @@ module SFWash
   end
 
   class CLI
-    VALID_COMMANDS = %w{schedule}
+    VALID_COMMANDS = %w{schedule setup}
     CONFIG_FILE_PATH = File.expand_path('~/.sfwash')
 
     AVAILABLE_DAYS = %w{Monday Tuesday Wednesday Thursday Friday}
@@ -70,6 +70,50 @@ module SFWash
       else
         $stderr.puts("You must specify a command! Try `sfwash help`.")
       end
+    end
+
+    def self.gets_or_default(conf)
+      param = gets.chomp
+      if param == ''
+        return conf
+      else
+        return param
+      end
+    end
+
+    def self.setup(options)
+      if File.exists?(CONFIG_FILE_PATH)
+        config = YAML.load_file(CONFIG_FILE_PATH)
+      else
+        config = {:preferences => {}}
+      end
+      preferences = config[:preferences]
+      preferences[:detergent] = "Last Order"
+      preferences[:bleach] = "Last Order"
+      preferences[:softener] = "Last Order"
+      puts "Setting up SF Wash.\nPrevious settings will remain if nothing is entered.\nPlease enter your full name (e.g. John Smith):"
+      preferences[:name] = gets_or_default(preferences[:name])
+      puts "Phone (e.g. xxx-xxx-xxxx):"
+      preferences[:phone] = gets_or_default(preferences[:phone])
+      puts "Email:"
+      preferences[:email] = gets_or_default(preferences[:email])
+      puts "Address:"
+      preferences[:address] = gets_or_default(preferences[:address])
+      puts "Apartment Number:"
+      preferences[:apt] = gets_or_default(preferences[:apt])
+      puts "Day (Monday, Tuesday, Wednesday, Thursday, Friday):"
+      preferences[:day] = gets_or_default(preferences[:day])
+      puts "Time:"
+      preferences[:time] = gets_or_default(preferences[:time])
+      puts "Instructions:"
+      preferences[:instructions]= gets_or_default(preferences[:instructions])
+      puts "Detergent (default last order):"
+      preferences[:detergent] = gets_or_default(preferences[:detergent])
+      puts "Bleach (default last order):"
+      preferences[:bleach] = gets_or_default(preferences[:bleach])
+      puts "Softener (default last order):"
+      preferences[:softener] = gets_or_default(preferences[:softener])
+      File.open(CONFIG_FILE_PATH, 'w') {|f| f.write config.to_yaml }
     end
 
     def self.schedule(options)
