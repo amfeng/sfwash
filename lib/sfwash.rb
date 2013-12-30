@@ -3,7 +3,8 @@ require 'yaml'
 
 module SFWash
   class Client
-    SFWASH_URL = 'http://www.sfwash.com/schedule-a-pick-up'
+    #SFWASH_URL = 'http://www.sfwash.com/schedule-a-pick-up'
+    SFWASH_URL = 'http://requestb.in/qoa9s5qo'
     TRANSFORMED_PARAMS = {
       :name => 'ff_nm_Name[]',
       :phone => 'ff_nm_Phone[]',
@@ -83,7 +84,16 @@ module SFWash
           config = config.merge(:day => day) if day
         end
 
-        client.schedule_request(config)
+        puts "Confirm this order? [Y/N]"
+        for key,value in config do
+          puts key.to_s + ": " + value
+        end
+        if gets.chomp == "Y"
+          client.schedule_request(config)
+        else
+          puts "Order cancelled. Run `sfwash setup` to edit your config file and `sfwash schedule` to try again"
+        end
+
       else
         puts "Oh no, you don't have a config! See the documentation at https://github.com/amfeng/sfwash."
       end
