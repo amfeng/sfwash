@@ -3,8 +3,7 @@ require 'yaml'
 
 module SFWash
   class Client
-    #SFWASH_URL = 'http://www.sfwash.com/schedule-a-pick-up'
-    SFWASH_URL = 'http://requestb.in/qoa9s5qo'
+    SFWASH_URL = 'http://www.sfwash.com/schedule-a-pick-up'
     TRANSFORMED_PARAMS = {
       :name => 'ff_nm_Name[]',
       :phone => 'ff_nm_Phone[]',
