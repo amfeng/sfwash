@@ -85,12 +85,12 @@ module SFWash
 
         puts "Confirm this order? [Y/N]"
         for key,value in config do
-          puts key.to_s + ": " + value
+          puts key.to_s.capitalize + ": " + value
         end
         if gets.chomp == "Y"
           client.schedule_request(config)
         else
-          puts "Order cancelled. Run `sfwash setup` to edit your config file and `sfwash schedule` to try again"
+          puts "Order cancelled. Run `sfwash setup` to edit your config file and `sfwash schedule` to try again."
         end
 
       else
