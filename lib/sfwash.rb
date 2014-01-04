@@ -87,6 +87,7 @@ module SFWash
         for key,value in config do
           puts key.to_s.capitalize + ": " + value
         end
+        
         if gets.chomp == "Y"
           client.schedule_request(config)
         else
