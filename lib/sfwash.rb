@@ -72,13 +72,9 @@ module SFWash
       end
     end
 
-    def self.gets_or_default(conf)
+    def self.gets_or_default(current_value)
       param = gets.chomp
-      if param == ''
-        return conf
-      else
-        return param
-      end
+      param == '' ? current_value : param
     end
 
     def self.setup(options)
@@ -87,32 +83,31 @@ module SFWash
       else
         config = {:preferences => {}}
       end
+
+      #Set Default Values for 3 fields
       preferences = config[:preferences]
       preferences[:detergent] = "Last Order"
       preferences[:bleach] = "Last Order"
       preferences[:softener] = "Last Order"
-      puts "Setting up SF Wash.\nPrevious settings will remain if nothing is entered.\nPlease enter your full name (e.g. John Smith):"
-      preferences[:name] = gets_or_default(preferences[:name])
-      puts "Phone (e.g. xxx-xxx-xxxx):"
-      preferences[:phone] = gets_or_default(preferences[:phone])
-      puts "Email:"
-      preferences[:email] = gets_or_default(preferences[:email])
-      puts "Address:"
-      preferences[:address] = gets_or_default(preferences[:address])
-      puts "Apartment Number:"
-      preferences[:apt] = gets_or_default(preferences[:apt])
-      puts "Day (Monday, Tuesday, Wednesday, Thursday, Friday):"
-      preferences[:day] = gets_or_default(preferences[:day])
-      puts "Time:"
-      preferences[:time] = gets_or_default(preferences[:time])
-      puts "Instructions:"
-      preferences[:instructions]= gets_or_default(preferences[:instructions])
-      puts "Detergent (default last order):"
-      preferences[:detergent] = gets_or_default(preferences[:detergent])
-      puts "Bleach (default last order):"
-      preferences[:bleach] = gets_or_default(preferences[:bleach])
-      puts "Softener (default last order):"
-      preferences[:softener] = gets_or_default(preferences[:softener])
+
+      puts "Setting up SF Wash.\nPrevious settings will remain if nothing is entered.\n"
+      [
+        [:name, "Full Name:"],
+        [:phone,"Phone (e.g. xxx-xxx-xxxx):"],
+        [:email,"Email:"],
+        [:address,"Address"],
+        [:apt, "Apartment Number:"],
+        [:day,"Day:"],
+        [:time,"Time:"],
+        [:instructions, "Instructions:"],
+        [:detergent,"Detergent (Default Last Order):"],
+        [:bleach,"Bleach (Default Last Order):"],
+        [:softener,"Softener (Default Last Order):"]
+      ].each do |key, label|
+        puts label
+        preferences[key] = gets_or_default(preferences[key])
+      end
+
       File.open(CONFIG_FILE_PATH, 'w') {|f| f.write config.to_yaml }
     end
 
