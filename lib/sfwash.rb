@@ -56,7 +56,7 @@ module SFWash
   end
 
   class CLI
-    VALID_COMMANDS = %w{schedule}
+    VALID_COMMANDS = %w{schedule setup}
     CONFIG_FILE_PATH = File.expand_path('~/.sfwash')
 
     AVAILABLE_DAYS = %w{Monday Tuesday Wednesday Thursday Friday}
@@ -70,6 +70,45 @@ module SFWash
       else
         $stderr.puts("You must specify a command! Try `sfwash help`.")
       end
+    end
+
+    def self.gets_or_default(current_value)
+      param = gets.chomp
+      param == '' ? current_value : param
+    end
+
+    def self.setup(options)
+      if File.exists?(CONFIG_FILE_PATH)
+        config = YAML.load_file(CONFIG_FILE_PATH)
+      else
+        config = {:preferences => {}}
+      end
+
+      #Set Default Values for 3 fields
+      preferences = config[:preferences]
+      preferences[:detergent] = "Last Order"
+      preferences[:bleach] = "Last Order"
+      preferences[:softener] = "Last Order"
+
+      puts "Setting up SF Wash.\nPrevious settings will remain if nothing is entered.\n"
+      [
+        [:name, "Full Name:"],
+        [:phone,"Phone (e.g. xxx-xxx-xxxx):"],
+        [:email,"Email:"],
+        [:address,"Address"],
+        [:apt, "Apartment Number:"],
+        [:day,"Day:"],
+        [:time,"Time:"],
+        [:instructions, "Instructions:"],
+        [:detergent,"Detergent (Default Last Order):"],
+        [:bleach,"Bleach (Default Last Order):"],
+        [:softener,"Softener (Default Last Order):"]
+      ].each do |key, label|
+        puts label
+        preferences[key] = gets_or_default(preferences[key])
+      end
+
+      File.open(CONFIG_FILE_PATH, 'w') {|f| f.write config.to_yaml }
     end
 
     def self.schedule(options)
